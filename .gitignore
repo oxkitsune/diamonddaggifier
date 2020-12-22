@@ -1,6 +1,7 @@
 # Backend
 backend/target
 backend/skins
+backend/Rocket.toml
 
 # Frontend
 frontend/build
