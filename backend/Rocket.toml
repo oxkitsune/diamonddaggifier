@@ -1,0 +1,9 @@
+[default]
+address = "0.0.0.0"
+limits = { forms = "64 kB", json = "1 MiB" }
+port = 80
+
+
+## Only use https on release builds, but Rocket.toml should be modified on the prod server to setup TLS
+[release]
+port = 443
