@@ -1,0 +1,14 @@
+# Backend
+backend/target
+backend/skins
+
+# Frontend
+frontend/build
+frontend/node_modules
+frontend/.eslintcache
+
+# Certifcates
+*.pem
+*.key
+*.p7b
+*.crt
