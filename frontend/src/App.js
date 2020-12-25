@@ -1,11 +1,11 @@
 import './App.css';
+import EMPTY_CAPE from './empty_cape.png';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Component } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form'
 import Col from 'react-bootstrap/Col'
 import ReactSkinview3d from 'react-skinview3d'
-
 const API = process.env.DD_API_URL || "http://127.0.0.1:80";
 
 class App extends Component {
@@ -18,29 +18,26 @@ class App extends Component {
       busy: false
     }
 
-    console.log(API);
-
-
     this.model = <ReactSkinview3d
+      capeUrl={EMPTY_CAPE}
       skinUrl={API + "/api/skin/" + this.state.uuid}
       height="250"
       width="250"
       enableOrbitControls={false}
       onReady={(instance) => {
         this._modelInstance = instance;
-        this._modelInstance.animation = this.rotateAnimation;
+        this._modelInstance.animations.add((player, time) => {
+          player.rotation.y += .033;
+        });
         this.updateSkin();
       }}
+
     />
     this.handleChange = this.handleChange.bind(this);
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.downloadSkin = this.downloadSkin.bind(this);
     this.uploadSkin = this.uploadSkin.bind(this);
     this.diamonddaggify = this.diamonddaggify.bind(this);
-  }
-
-  rotateAnimation(player, time) {
-    player.rotation.y += .033;
   }
 
   handleChange(e) {
@@ -64,7 +61,7 @@ class App extends Component {
       }
     })
       .then((result) => {
-        if (result.status != 200) {
+        if (result.status !== 200) {
           alert("Failed to get skin from API (might be an invalid name!): " + result.statusText);
           this.setState({
             name: this.state.name,
@@ -73,7 +70,7 @@ class App extends Component {
           });
         }
         else {
-          this._modelInstance.skinUrl = skinUrl;
+          this._modelInstance.loadSkin(skinUrl);
         }
       }, (error) => {
         alert("Failed to get skin from API: " + error);
