@@ -1,7 +1,10 @@
-# Backend
+# Backend (deprecated)
 backend/target
 backend/skins
 backend/Rocket.toml
+
+# Backend
+backend-warp/target
 
 # Frontend
 frontend/build
